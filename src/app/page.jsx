@@ -1,10 +1,14 @@
 import React from 'react'
-import Main from './components/Main'
+import Main from './components/MainProducts'
 
 
-export default function page() {
+export default function Home() {
   return (
-    <div><Main /></div>
+    <main>
+      <h1 className='font-bold'>
+        This looks like a shadow
+      </h1>
+    </main>
   )
 }
  
