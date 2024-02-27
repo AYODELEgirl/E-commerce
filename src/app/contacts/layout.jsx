@@ -1,7 +1,6 @@
-import React from 'react'
 
-export default function ContactLayout() {
+export default function ContactLayout({children}) {
   return (
-    <div>layout</div>
+    <div>{children}</div>
   )
 }
