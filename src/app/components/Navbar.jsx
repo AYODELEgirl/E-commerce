@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { FaShoppingBasket } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
-import { CiDeliveryTruck } from "react-icons/ci";
 
 const inter = Pacifico ({ subsets: ["latin"] , weight: ['400']});
 
