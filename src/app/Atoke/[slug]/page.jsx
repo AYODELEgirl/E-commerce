@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { products } from "../Shop";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppContext } from "@/app/components/context"
+import products from "@/app/data/productData";
 
 export default function page({ params, setCartModal }) {
   const router = useRouter();
@@ -19,13 +19,57 @@ export default function page({ params, setCartModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push("?cart");
-    let finalArray = state.allItems;
-    productCard.quantity = quantity;
-    finalArray.push(productCard);
-    console.log(productCard);
-    window.sessionStorage.setItem("items", JSON.stringify(finalArray));
-    setState({...state,allItems:finalArray,cart:state.cart + 1,openModal: true});
+
+    setState(prevState => {
+      // Clone the allItems array
+      const updatedItems = [...prevState.allItems];
+    
+      // Find the index of the item you want to update
+      const index = updatedItems.findIndex(item => item.id === productCard.id);
+    
+      if (index !== -1) {
+        // Update the quantity of the existing item
+        updatedItems[index] = {
+          ...updatedItems[index],
+          quantity: updatedItems[index].quantity + Number(productCard.quantity)
+        };
+      } else {
+        productCard.quantity = quantity;
+        updatedItems.push({ id: productCard.id, quantity: Number(productCard.quantity) });
+      }
+    
+      // Return the updated state
+      return {
+        ...prevState,
+        allItems: updatedItems,
+        cart: prevState.cart + 1,
+        openModal: true
+      };
+    });
+
+    // const index = state.allItems.findIndex(item => item.id === productCard.id);
+
+    // if (index !== -1) {
+    //   setState({...state,allItems:[...state.allItems, allItems[index].quantity = Number(productCard.quantity) + quantity],cart:state.cart + 1,openModal: true});
+    //   // state.allItems[index].quantity = Number(productCard.quantity) + quantity
+    // } else {
+    //   let finalArray = state.allItems;
+    //   productCard.quantity = quantity;
+    //   finalArray.push(productCard);
+    //   console.log(productCard);
+    //   window.sessionStorage.setItem("items", JSON.stringify(finalArray));
+    //   setState({...state,allItems:finalArray,cart:state.cart + 1,openModal: true});
+    // }
+   
+    // router.push("?cart");
+    // let finalArray = state.allItems;
+    // productCard.quantity = quantity;
+    // console.log(finalArray)
+    // console.log(productCard)
+    // finalArray.push(productCard);
+    // console.log(productCard);
+    // window.sessionStorage.setItem("items", JSON.stringify(finalArray));
+    // setState({...state,allItems:finalArray,cart:state.cart + 1,openModal: true});
   };
 
   const relatedItems = products
@@ -40,10 +84,10 @@ export default function page({ params, setCartModal }) {
   const relatedCategory = relatedItems.map((items) => (
     <section
       key={items.id}
-      className="mx-auto md:col-span-1 col-span-3 my-auto mt-6 px-4 "
-    >
+      className="mx-auto md:col-span-1 col-span-3 my-auto mt-6 px-4 ">
       <Link href={`/Atoke/${items.title.split(" ").join("-")}`}>
-        <div>
+
+      <div>
           <Image
             src={`/${items.image}`}
             alt={items.title}
@@ -61,6 +105,18 @@ export default function page({ params, setCartModal }) {
     </section>
   ));
 
+
+
+
+  
+      
+     
+
+ 
+
+      
+
+       
   return (
     <div>
       {" "}
@@ -122,29 +178,4 @@ export default function page({ params, setCartModal }) {
   );
 }
 
-// "use client"
-// import React from 'react'
-// import { products } from '../Shop'
-// import Image from 'next/image'
 
-// export default function Page({params}) {
-//     const productCard = products.find(goods => goods.title.split(" ").join("-") == params.slug )
-//   return (
-//     <div className='px-10'>
-
-//         <section className='my-10'>
-//             <Image src={`/${productCard.image}`} alt={productCard.title} width={300} height={300}/>
-//         </section>
-//         <section>
-//             <h1>
-//                 {productCard.title}
-//             </h1>
-//             <p>{productCard.description}</p>
-//         </section>
-
-//        <section>
-
-//        </section>
-//     </div>
-//   )
-// }

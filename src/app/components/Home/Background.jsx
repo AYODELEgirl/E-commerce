@@ -31,10 +31,11 @@ export default function Background() {
                 Embrace the elegance,cherish the heritage,wear with pride.{" "}
               </em>
             </p>
-
+           <Link href="/Atoke" >
             <button className=" mt-5 border-2 rounded-sm bg-transparent text-white my-3 py-3 w-50 px-5">
               Shop Now
             </button>
+            </Link>
           </div>
         </div>
       </div>

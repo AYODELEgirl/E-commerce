@@ -7,7 +7,7 @@ import { FaShoppingBasket, FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { usePathname, useSearchParams } from "next/navigation";
-import {useAppContext} from "@/app/components/context";
+import { useAppContext } from "@/app/components/context";
 
 const inter = Pacifico({ subsets: ["latin"], weight: ["400"] });
 
@@ -20,8 +20,10 @@ export default function Navbar() {
   const [total, setTotal] = useState(0);
   const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const {state, setState} = useAppContext();
-  const handleCartClick = () => {setState ({...state,openModal: !state.openModal})};
+  const { state, setState } = useAppContext();
+  const handleCartClick = () => {
+    setState({ ...state, openModal: !state.openModal });
+  };
 
   function controlNav() {
     setOpen(!open);
@@ -47,13 +49,14 @@ export default function Navbar() {
       setTotal(sum);
 
       const qty = JSON.parse(sessionStorage.getItem("items"))
-        .map((item) => item.quantity)
+        .map((item) => Number(item.quantity))
         .reduce((a, b) => a + b, 0);
       setCart(qty);
     }
     console.log(JSON.parse(sessionStorage.getItem("items")));
     setAllItems(JSON.parse(sessionStorage.getItem("items")));
-  }, [searchParams]);
+    console.log(state.allItems)
+  }, [state]);
   return (
     <>
       <div>
@@ -99,9 +102,9 @@ export default function Navbar() {
                 <Link href="/Atoke">Shop</Link>
               </li>
               <li>
-                <Link href="/About">Activity</Link>
+                <Link href="/About">About Us</Link>
               </li>
-              <li className="font-bold text-xl">
+              <li>
                 <Link href="/contacts">Contacts</Link>
               </li>
             </ul>
@@ -123,9 +126,12 @@ export default function Navbar() {
                     <div className="flex w-full justify-between">
                       <h3 className="font-bold px-5">Your Basket</h3>
                     </div>
-                    <FaTimes onClick={handleCartClick} style={{cursor:"pointer"}} />
-                    
-                    {state.allItems !== null && allItems.length > 0 ? (
+                    <FaTimes
+                      onClick={handleCartClick}
+                      style={{ cursor: "pointer" }}
+                    />
+
+                    {state.allItems !== null && allItems?.length > 0 ? (
                       <>
                         {" "}
                         {state.allItems.map((item) => (
@@ -146,7 +152,7 @@ export default function Navbar() {
                                     {item.title}
                                   </p>
                                   <p className="text-xs">
-                                    {item.price.toLocaleString()}
+                                    {item.price?.toLocaleString()}
                                   </p>
                                 </div>
                               </div>
@@ -165,9 +171,13 @@ export default function Navbar() {
                               </div>
 
                               <button
-                                   onClick={() => {
-                                    const newItems = state.allItems.filter((i) => i.id !== item.id); setState ({...state,allItems: newItems});
-                                   }}
+                                onClick={() => {
+                                  console.log(item.id)
+                                  const newItems = state.allItems.filter(
+                                    (i) => i.id !== item.id
+                                  );
+                                  setState({ ...state, allItems: newItems });
+                                }}
                                 className=" rounded-2xl border py-0.5 px-5 border-[#c19b7c] text-[10px]"
                               >
                                 Remove

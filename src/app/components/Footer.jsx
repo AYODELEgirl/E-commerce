@@ -121,7 +121,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row justify-between">
           <section>
             <ul className="flex flex-col lg:flex-row gap-5 py-6 lg:text-[.9rem] text-sm text-[#a0a0a0]">
-              <li> &copy;Yoruba Elegance.All rights reserved</li>
+              <li> &copy;Yoruba Elegance 2024 .All rights reserved</li>
               <li className="underline">Terms and conditions</li>
               <li className="underline">Powered by webflow</li>
               <li className="underline">Privacy Policy</li>
